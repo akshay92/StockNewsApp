@@ -21,6 +21,8 @@ class MainViewModel @Inject constructor(
     repository: StockRepository
 ) : ViewModel() {
 
+    val TRENDING_ARTICLE_SIZE = 600
+
     private var poller = StockPoller(
         repository,
         DefaultSchedulers().io()
@@ -30,7 +32,7 @@ class MainViewModel @Inject constructor(
     var articles: LiveData<List<NewsArticle>> = _articles
 
     private val _trendingArticles = MutableLiveData<List<NewsArticle>>()
-    var trendingArticles: LiveData<List<NewsArticle>> = _articles
+    var trendingArticles: LiveData<List<NewsArticle>> = _trendingArticles
 
     private val _stocks = MutableLiveData<List<Stock>>()
     var stocks: LiveData<List<Stock>> = _stocks
@@ -39,8 +41,8 @@ class MainViewModel @Inject constructor(
     fun loadArticles() {
         getNewsArticleListUseCase.invoke {
             it.onSuccess {   data->
-                _trendingArticles.postValue(data.subList(0,6))
-                _articles.postValue(data.subList(6, data.size))
+                _trendingArticles.postValue(data.getTrendingList())
+                _articles.postValue(data.getArticleList())
             }
         }
     }
@@ -49,7 +51,6 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             poller.poll(timeDelay).collect {
                 it.onSuccess { data ->
-                    Log.v("Update Stock Price", "Update Stock Price")
                     _stocks.postValue(data)
                 }
             }
@@ -58,6 +59,25 @@ class MainViewModel @Inject constructor(
 
     fun closePoller() {
         poller.close()
+    }
+
+
+  fun  List<NewsArticle>.getTrendingList() : List<NewsArticle>{
+      if(size <= TRENDING_ARTICLE_SIZE){
+          return this
+      }
+      else{
+          return subList(0,TRENDING_ARTICLE_SIZE)
+      }
+  }
+
+  fun  List<NewsArticle>.getArticleList() : List<NewsArticle>{
+        if(size > TRENDING_ARTICLE_SIZE){
+            return subList(TRENDING_ARTICLE_SIZE,size)
+        }
+        else{
+            return emptyList()
+        }
     }
 
 }
