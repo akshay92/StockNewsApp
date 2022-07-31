@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_regular">16dp</dimen>
+    <dimen name="margin_smallest">6dp</dimen>
+    <dimen name="margin_smaller">8dp</dimen>
+    <dimen name="margin_large">21dp</dimen>
+    <dimen name="margin_larger">24dp</dimen>
+
+    <dimen name="image_height">32dp</dimen>
+    <dimen name="padding_large">15dp</dimen>
+    <dimen name="card_stroke_width">1dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+
+</resources>

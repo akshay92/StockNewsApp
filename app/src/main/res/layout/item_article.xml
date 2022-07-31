@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.akshay.stocknewsapp.main.domain.model.NewsArticle" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_smallest"
+        app:strokeWidth="@dimen/card_stroke_width"
+        app:strokeColor="@color/design_default_color_primary"
+        app:cardElevation="@dimen/card_elevation"
+        android:layout_marginTop="@dimen/margin_smallest"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/articleIm"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_launcher_background"
+                tools:text="Ford" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/articleTitle"
+                android:layout_width="0dp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_margin="5dp"
+                android:layout_marginTop="0dp"
+                android:maxLines="1"
+                android:maxLength="50"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@+id/articleIm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{data.component1()}"
+                tools:text="Ins VS Aus update live" />
+            />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/articleDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:maxLines="3"
+                android:maxLength="100"
+                android:ellipsize="end"
+                android:layout_margin="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{data.component2()}"
+                app:layout_constraintStart_toEndOf="@+id/articleIm"
+                app:layout_constraintTop_toBottomOf="@+id/articleTitle"
+                tools:text="Ins VS Aus update live" />
+            />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/publishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_margin="5dp"
+                android:text="@{data.component4()}"
+                app:layout_constraintStart_toEndOf="@+id/articleIm"
+                app:layout_constraintTop_toBottomOf="@+id/articleDescription"
+                tools:text="12 June 2022" />
+            />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>
