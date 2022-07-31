@@ -1,6 +1,5 @@
 package com.akshay.stocknewsapp.main.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,7 +20,7 @@ class MainViewModel @Inject constructor(
     repository: StockRepository
 ) : ViewModel() {
 
-    val TRENDING_ARTICLE_SIZE = 600
+    private val TRENDING_ARTICLE_SIZE = 600
 
     private var poller = StockPoller(
         repository,
@@ -40,7 +39,7 @@ class MainViewModel @Inject constructor(
 
     fun loadArticles() {
         getNewsArticleListUseCase.invoke {
-            it.onSuccess {   data->
+            it.onSuccess { data ->
                 _trendingArticles.postValue(data.getTrendingList())
                 _articles.postValue(data.getArticleList())
             }
@@ -62,22 +61,16 @@ class MainViewModel @Inject constructor(
     }
 
 
-  fun  List<NewsArticle>.getTrendingList() : List<NewsArticle>{
-      if(size <= TRENDING_ARTICLE_SIZE){
-          return this
-      }
-      else{
-          return subList(0,TRENDING_ARTICLE_SIZE)
-      }
-  }
+    private fun List<NewsArticle>.getTrendingList(): List<NewsArticle> =  if (size <= TRENDING_ARTICLE_SIZE) {
+            this
+        } else {
+            subList(0, TRENDING_ARTICLE_SIZE)
+        }
 
-  fun  List<NewsArticle>.getArticleList() : List<NewsArticle>{
-        if(size > TRENDING_ARTICLE_SIZE){
-            return subList(TRENDING_ARTICLE_SIZE,size)
+    private fun List<NewsArticle>.getArticleList(): List<NewsArticle> =  if (size > TRENDING_ARTICLE_SIZE) {
+            subList(TRENDING_ARTICLE_SIZE, size)
+        } else {
+            emptyList()
         }
-        else{
-            return emptyList()
-        }
-    }
 
 }
