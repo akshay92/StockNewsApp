@@ -20,7 +20,7 @@ class MainViewModel @Inject constructor(
     repository: StockRepository
 ) : ViewModel() {
 
-    private val TRENDING_ARTICLE_SIZE = 600
+    private val TRENDING_ARTICLE_SIZE = 6
 
     private var poller = StockPoller(
         repository,
