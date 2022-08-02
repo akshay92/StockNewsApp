@@ -23,6 +23,7 @@ class StockPoller(
             while (!isClosedForSend) {
                 if(isCanceledPool){
                     close()
+                    continue
                 }
                 val data = repository.getStockList()
                 send(data)
